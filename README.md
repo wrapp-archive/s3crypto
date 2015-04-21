@@ -1,27 +1,26 @@
 # s3Crypto
 
-This module provides a set of functions to encrypt and decrypt data in S3 using an encryption key.
-
+This module provides a set of functions to encrypt and decrypt data in S3 using a Data Encryption Key (DEK).
 The encryption key is in its turn encrypted using KMS and stored in S3.
-
+S3_paths must include s3 scheme, t.ex. ```s3://bukect/key```.
 
 ## Provided functionality:
 
-* Create a data encryption key using KMS and store it in S3:
+* Generate a new DEK with KMS using the KEK with kek_alias and store it at s3_path:
 
-    ```create_dek(kek_alias, dek_path)```
-
-
-* Use a data encryption key to encrypt data already in S3:
-
-    ```encrypt_in_s3(data_path, key_path)```
+    ```create_dek(kek_alias, s3_path)```
 
 
-* Use a data encryption key to store data encrypted in S3:
+* Get data at s3_data_path, encrypt it with DEK at s3_key_path, and store it at s3_data_path.enc:
 
-    ```save_encrypted_to_s3(data, data_path, key_path)```
+    ```encrypt_in_s3(s3_data_path, s3_key_path)```
 
 
-* Use a data encryption key to decrypt data in S3:
+* Save data at s3_data_path encrypted with DEK at s3_key_path:
 
-    ```get_decrypted_from_s3(data_path, key_path)```
+    ```save_encrypted_to_s3(data, s3_data_path, s3_key_path)```
+
+
+* Get data at s3_data_path and decrypt it using DEK at s3_key_path:
+
+    ```get_decrypted_from_s3(s3_data_path, s3_key_path)```
